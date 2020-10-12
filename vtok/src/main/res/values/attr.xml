@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Vtok">
+        <!--是否允许获得焦点-->
         <attr name="tvFocusable" format="boolean" />
+
+        <!--RV中非ItemView的View，使其获得焦点对齐的效果 -->
+        <attr name="tvAlignRvChild" format="boolean" />
     </declare-styleable>
 </resources>

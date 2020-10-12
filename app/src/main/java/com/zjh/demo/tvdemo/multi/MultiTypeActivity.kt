@@ -25,53 +25,66 @@ class MultiTypeActivity : AppCompatActivity(R.layout.activity_multi_type) {
         rv.adapter = MultiTypeAdapter()
         rv.isFocusable = false
         rv.isFocusableInTouchMode = false
-        (rv.layoutManager as LinearLayoutManager).startSmoothScroll(object : RecyclerView.SmoothScroller() {
-            override fun onSeekTargetStep(
-                dx: Int,
-                dy: Int,
-                state: RecyclerView.State,
-                action: Action
-            ) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onStop() {
-                TODO("Not yet implemented")
-            }
-
-            override fun onTargetFound(
-                targetView: View,
-                state: RecyclerView.State,
-                action: Action
-            ) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onStart() {
-                TODO("Not yet implemented")
-            }
-        })
     }
 
-    class MultiTypeAdapter : RecyclerView.Adapter<MultiTypeAdapter.Type1Holder>() {
+    class MultiTypeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+        companion object {
+            const val VIEW_TYPE1 = 1
+            const val VIEW_TYPE2 = 2
+        }
 
         class Type1Holder(view: View) : RecyclerView.ViewHolder(view) {
             val tv: TextView by lazy { view.findViewById<TextView>(R.id.tv) }
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Type1Holder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type1, parent, false)
-            view.setOnClickListener {
-                Toast.makeText(it.context, "点击 ${view.isFocusable}", Toast.LENGTH_SHORT).show()
+        class Type2Holder(view: View) : RecyclerView.ViewHolder(view) {
+            val tv: TextView by lazy { view.findViewById<TextView>(R.id.tv) }
+            val tv2: TextView by lazy { view.findViewById<TextView>(R.id.tv2) }
+            val tv3: TextView by lazy { view.findViewById<TextView>(R.id.tv3) }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            return when(viewType) {
+                VIEW_TYPE1 -> {
+                    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type1, parent, false)
+                    Type1Holder(view)
+                }
+                VIEW_TYPE2 -> {
+                    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type2, parent, false)
+                    Type2Holder(view)
+                }
+                else -> throw Throwable("")
             }
-            return Type1Holder(view)
         }
 
         override fun getItemCount() = 10
 
-        override fun onBindViewHolder(holder: Type1Holder, position: Int) {
-            holder.tv.text = "$position"
+        override fun getItemViewType(position: Int): Int {
+            return when(position) {
+                3, 4, 6 -> VIEW_TYPE2
+                else -> VIEW_TYPE1
+            }
         }
 
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            when(getItemViewType(position)) {
+                VIEW_TYPE1 -> {
+                    val holder1 = holder as Type1Holder
+                    holder1.tv.text = "$position"
+                }
+                VIEW_TYPE2 -> {
+                    val holder2 = holder as Type2Holder
+                    holder2.tv.text = "$position"
+                    holder2.tv2.text = "$position"
+                    holder2.tv3.text = "$position"
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Vtok.instance.detach(this)
     }
 }
