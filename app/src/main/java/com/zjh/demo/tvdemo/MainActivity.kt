@@ -2,6 +2,7 @@ package com.zjh.demo.tvdemo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
      * 计算滑动过程中的偏移值
      */
     private fun calDistances(view: View): Float {
+        Log.d("View++", "${view.pivotX}")
         //rv的中点
         val rvCenter = rv.width / 2f
         //view宽度的一半

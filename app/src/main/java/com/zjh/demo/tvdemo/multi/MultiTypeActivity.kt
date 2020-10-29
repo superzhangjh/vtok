@@ -21,7 +21,7 @@ class MultiTypeActivity : AppCompatActivity(R.layout.activity_multi_type) {
     override fun onCreate(savedInstanceState: Bundle?) {
         Vtok.instance.attach(this)
         super.onCreate(savedInstanceState)
-        rv.layoutManager = LinearLayoutManager(this)
+        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv.adapter = MultiTypeAdapter()
         rv.isFocusable = false
         rv.isFocusableInTouchMode = false
@@ -62,7 +62,7 @@ class MultiTypeActivity : AppCompatActivity(R.layout.activity_multi_type) {
 
         override fun getItemViewType(position: Int): Int {
             return when(position) {
-                3, 4, 6 -> VIEW_TYPE2
+//                3, 4, 6 -> VIEW_TYPE2
                 else -> VIEW_TYPE1
             }
         }

@@ -11,7 +11,7 @@ import com.zjh.vtok.uitls.RvUtils
 /**
  * 指定比例对齐的scroller
  */
-class AlignLinearSmoothScroller(context: Context) : LinearSmoothScroller(context) {
+class AlignLinearSmoothScroller(context: Context, var ratio: Float = 0.5f) : LinearSmoothScroller(context) {
 
     override fun calculateDtToFit(
         viewStart: Int,
